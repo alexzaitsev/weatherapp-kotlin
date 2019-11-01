@@ -1,6 +1,6 @@
 package com.alex_zaitsev.weatherapp.domain.usecases.current_weather
 
-import com.alex_zaitsev.weatherapp.data.api.weather.CurrentWeatherApi
+import com.alex_zaitsev.weatherapp.data.api.CurrentWeatherApi
 
 data class CurrentWeather(val city: String, val description: String)
 

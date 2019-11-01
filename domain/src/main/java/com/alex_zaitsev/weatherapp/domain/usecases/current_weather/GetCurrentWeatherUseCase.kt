@@ -1,6 +1,6 @@
 package com.alex_zaitsev.weatherapp.domain.usecases.current_weather
 
-import com.alex_zaitsev.weatherapp.data.api.weather.WeatherApiManager
+import com.alex_zaitsev.weatherapp.data.api.WeatherApiManager
 import com.alex_zaitsev.weatherapp.domain.usecases.UseCase
 
 class GetCurrentWeatherUseCase : UseCase() {
