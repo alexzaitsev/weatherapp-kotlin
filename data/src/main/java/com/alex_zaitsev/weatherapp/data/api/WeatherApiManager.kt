@@ -1,11 +1,15 @@
 package com.alex_zaitsev.weatherapp.data.api
 
-class WeatherApiManager {
+import kotlinx.coroutines.Deferred
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-    fun getCurrentWeather(city: String): CurrentWeatherApi {
-        return CurrentWeatherApi(
-            city,
-            "some weather description"
-        )
-    }
+interface WeatherApiManager {
+
+    @GET("data/2.5/weather")
+    fun getCurrentWeather(
+        @Query("q") city: String,
+        @Query("APPID") appId: String
+    ): Deferred<Response<CurrentWeatherResponse>>
 }
