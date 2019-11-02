@@ -7,17 +7,27 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.alex_zaitsev.weatherapp.data._di.DaggerDataComponent
+import com.alex_zaitsev.weatherapp.domain.usecases._di.DaggerDomainComponent
 import com.alex_zaitsev.weatherapp.view.App
-import com.alex_zaitsev.weatherapp.view._di.AppModule
+import com.alex_zaitsev.weatherapp.view._di.DaggerAppComponent
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 
 object AppInjector {
 
     fun init(app: App) {
+        val dataComponent = DaggerDataComponent.builder()
+            .build()
+
+        val domainComponent = DaggerDomainComponent.builder()
+            .build()
+
         DaggerAppComponent.builder()
-            .appModule(AppModule(app))
-            .build().inject(app)
+            .dataComponent(dataComponent)
+            .domainComponent(domainComponent)
+            .build()
+            .inject(app)
         app.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivity(activity)

@@ -57,6 +57,6 @@ class ApiModule {
 
     @Provides
     internal fun provideApiManager(builder: Retrofit.Builder): WeatherApiManager {
-        return builder.build().create<WeatherApiManager>(WeatherApiManager::class.java!!)
+        return builder.build().create<WeatherApiManager>(WeatherApiManager::class.java)
     }
 }
