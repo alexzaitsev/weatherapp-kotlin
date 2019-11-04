@@ -1,14 +1,15 @@
 package com.alex_zaitsev.weatherapp.view.main
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.GetCurrentWeatherUseCase
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-class MainViewModel
-    @Inject constructor(val currentWeatherUseCase: GetCurrentWeatherUseCase)
-    : ViewModel() {
+class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWeatherUseCase) :
+    ViewModel() {
 
     val currentCity = MutableLiveData<String>()
     val currentWeather = MediatorLiveData<String>()
