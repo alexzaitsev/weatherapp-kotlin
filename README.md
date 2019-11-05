@@ -1,4 +1,4 @@
-# Overview
+## Brief description
 The goal of this app is to create a sample project to demonstrate the most modern Android development stack.
 
 ## Stack
