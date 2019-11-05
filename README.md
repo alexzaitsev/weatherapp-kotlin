@@ -1,17 +1,17 @@
-###### Language
+#### Language
 Kotlin
 
-###### Architecture
+#### Architecture
 Clean Architecture.  
 The app is divided into the next modules: app (view layer), domain (business logic layer), data (data layer).  
 
-###### Dependency Injection tool
+#### Dependency Injection tool
 Koin
 
-###### Jetpack
+#### Jetpack
 ViewModel  
 LiveData  
 DataBinding
 
-###### Asynchronous operations
+#### Asynchronous operations
 Kotlin Coroutines  
