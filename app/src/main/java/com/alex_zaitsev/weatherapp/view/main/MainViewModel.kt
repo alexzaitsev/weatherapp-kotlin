@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.CurrentWeatherResult
 import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.GetCurrentWeatherUseCase
 import kotlinx.coroutines.launch
 
@@ -17,8 +18,10 @@ class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWea
     init {
         currentWeather.addSource(currentCity) { city: String ->
             viewModelScope.launch {
-                val currentWeatherStr = currentWeatherUseCase.get(city).toString()
-                currentWeather.value = currentWeatherStr
+                when(val result = currentWeatherUseCase.get(city)) {
+                    is CurrentWeatherResult.Data -> currentWeather.value = result.toString()
+                    is CurrentWeatherResult.Error -> currentWeather.value = result.message
+                }
             }
         }
     }
