@@ -35,15 +35,13 @@ val apiModule = module {
             .create()
     }
 
-    single<Retrofit.Builder> {
+    single<WeatherApiManager> {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(get()))
             .client(get())
             .baseUrl(ApiConst.WEATHER_BASE_URL)
-    }
-
-    single<WeatherApiManager> { (builder: Retrofit.Builder) ->
-        builder.build().create(WeatherApiManager::class.java)
+            .build()
+            .create(WeatherApiManager::class.java)
     }
 }
 
