@@ -40,21 +40,25 @@ class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWea
 
     init {
         currentWeather.addSource(inputCity) { city: String ->
-            isProgressVisible.value = true
-            viewModelScope.launch {
-                when(val result = currentWeatherUseCase.get(city)) {
-                    is CurrentWeatherResult.Data -> {
-                        isDataVisible.value = true
-                        isErrorVisible.value = false
-                        currentWeather.value = result
+            if (isNetwork) {
+                isProgressVisible.value = true
+                viewModelScope.launch {
+                    when (val result = currentWeatherUseCase.get(city)) {
+                        is CurrentWeatherResult.Data -> {
+                            isDataVisible.value = true
+                            isErrorVisible.value = false
+                            currentWeather.value = result
+                        }
+                        is CurrentWeatherResult.Error -> {
+                            isDataVisible.value = false
+                            isErrorVisible.value = true
+                            errorMessage.value = result.message
+                        }
                     }
-                    is CurrentWeatherResult.Error -> {
-                        isDataVisible.value = false
-                        isErrorVisible.value = true
-                        errorMessage.value = result.message
-                    }
+                    isProgressVisible.value = false
                 }
-                isProgressVisible.value = false
+            } else {
+                // SHOW TOAST
             }
         }
     }
