@@ -47,15 +47,14 @@ class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWea
                         isDataVisible.value = true
                         isErrorVisible.value = false
                         currentWeather.value = result
-                        isProgressVisible.value = false
                     }
                     is CurrentWeatherResult.Error -> {
                         isDataVisible.value = false
                         isErrorVisible.value = true
                         errorMessage.value = result.message
-                        isProgressVisible.value = false
                     }
                 }
+                isProgressVisible.value = false
             }
         }
     }
