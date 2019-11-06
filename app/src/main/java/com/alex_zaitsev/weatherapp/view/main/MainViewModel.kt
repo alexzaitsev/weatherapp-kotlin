@@ -12,15 +12,49 @@ import kotlinx.coroutines.launch
 class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWeatherUseCase) :
     ViewModel() {
 
-    val currentCity = MutableLiveData<String>()
-    val currentWeather = MediatorLiveData<String>()
+    // ============================= INPUT ==============================
+    /**
+     * City name entered by user
+     */
+    val inputCity = MutableLiveData<String>()
+
+    // ============================= OUTPUT =============================
+    /**
+     * Defines whether API request failed and error should be shown
+     */
+    val isErrorVisible = MutableLiveData<Boolean>()
+    /**
+     * Error message if API request failed
+     */
+    val errorMessage = MutableLiveData<String>()
+    /**
+     * Defines whether API request finished correctly and data is retrieved successfully
+     */
+    val isDataVisible = MutableLiveData<Boolean>()
+    /**
+     * Data that should be shown to the user if API request was successful
+     */
+    val currentWeather = MediatorLiveData<CurrentWeatherResult.Data>()
+
+    val isProgressVisible = MutableLiveData<Boolean>()
 
     init {
-        currentWeather.addSource(currentCity) { city: String ->
+        currentWeather.addSource(inputCity) { city: String ->
+            isProgressVisible.value = true
             viewModelScope.launch {
                 when(val result = currentWeatherUseCase.get(city)) {
-                    is CurrentWeatherResult.Data -> currentWeather.value = result.toString()
-                    is CurrentWeatherResult.Error -> currentWeather.value = result.message
+                    is CurrentWeatherResult.Data -> {
+                        isDataVisible.value = true
+                        isErrorVisible.value = false
+                        currentWeather.value = result
+                        isProgressVisible.value = false
+                    }
+                    is CurrentWeatherResult.Error -> {
+                        isDataVisible.value = false
+                        isErrorVisible.value = true
+                        errorMessage.value = result.message
+                        isProgressVisible.value = false
+                    }
                 }
             }
         }

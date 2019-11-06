@@ -2,6 +2,7 @@ package com.alex_zaitsev.weatherapp.view.main
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.observe
 import com.alex_zaitsev.weatherapp.R
 import com.alex_zaitsev.weatherapp.databinding.ActivityMainBinding
 import com.alex_zaitsev.weatherapp.view.BaseActivity
@@ -17,6 +18,9 @@ class MainActivity : BaseActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        viewModel.currentWeather.observe(this) {
+            binding.mainWeather.currentWeather = it
+        }
         binding.executePendingBindings()
     }
 }
