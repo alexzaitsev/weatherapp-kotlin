@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alex_zaitsev.weatherapp.R
 import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.CurrentWeatherResult
 import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.GetCurrentWeatherUseCase
 import kotlinx.coroutines.launch
@@ -36,11 +37,13 @@ class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWea
      */
     val currentWeather = MediatorLiveData<CurrentWeatherResult.Data>()
 
+    val errorResId = MutableLiveData<Int>()
     val isProgressVisible = MutableLiveData<Boolean>()
+    val isNetworkAvailable = MutableLiveData<Boolean>()
 
     init {
         currentWeather.addSource(inputCity) { city: String ->
-            if (isNetwork) {
+            if (isNetworkAvailable.value == true) {
                 isProgressVisible.value = true
                 viewModelScope.launch {
                     when (val result = currentWeatherUseCase.get(city)) {
@@ -58,7 +61,7 @@ class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWea
                     isProgressVisible.value = false
                 }
             } else {
-                // SHOW TOAST
+                errorResId.value = R.string.network_error
             }
         }
     }
