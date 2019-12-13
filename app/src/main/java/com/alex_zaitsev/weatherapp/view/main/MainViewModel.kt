@@ -1,23 +1,67 @@
 package com.alex_zaitsev.weatherapp.view.main
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.alex_zaitsev.weatherapp.R
+import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.CurrentWeatherResult
 import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.GetCurrentWeatherUseCase
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
-class MainViewModel
-    @Inject constructor(val currentWeatherUseCase: GetCurrentWeatherUseCase)
-    : ViewModel() {
+class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWeatherUseCase) :
+    ViewModel() {
 
-    val currentCity = MutableLiveData<String>()
-    val currentWeather = MediatorLiveData<String>()
+    // ============================= INPUT ==============================
+    /**
+     * City name entered by user
+     */
+    val inputCity = MutableLiveData<String>()
+
+    // ============================= OUTPUT =============================
+    /**
+     * Defines whether API request failed and error should be shown
+     */
+    val isErrorVisible = MutableLiveData<Boolean>()
+    /**
+     * Error message if API request failed
+     */
+    val errorMessage = MutableLiveData<String>()
+    /**
+     * Defines whether API request finished correctly and data is retrieved successfully
+     */
+    val isDataVisible = MutableLiveData<Boolean>()
+    /**
+     * Data that should be shown to the user if API request was successful
+     */
+    val currentWeather = MediatorLiveData<CurrentWeatherResult.Data>()
+
+    val errorResId = MutableLiveData<Int>()
+    val isProgressVisible = MutableLiveData<Boolean>()
+    val isNetworkAvailable = MutableLiveData<Boolean>()
 
     init {
-        currentWeather.addSource(currentCity) { city: String ->
-            viewModelScope.launch {
-                val currentWeatherStr = currentWeatherUseCase.get(city).toString()
-                currentWeather.value = currentWeatherStr
+        currentWeather.addSource(inputCity) { city: String ->
+            if (isNetworkAvailable.value == true) {
+                isProgressVisible.value = true
+                viewModelScope.launch {
+                    when (val result = currentWeatherUseCase.get(city)) {
+                        is CurrentWeatherResult.Data -> {
+                            isDataVisible.value = true
+                            isErrorVisible.value = false
+                            currentWeather.value = result
+                        }
+                        is CurrentWeatherResult.Error -> {
+                            isDataVisible.value = false
+                            isErrorVisible.value = true
+                            errorMessage.value = result.message
+                        }
+                    }
+                    isProgressVisible.value = false
+                }
+            } else {
+                errorResId.value = R.string.network_error
             }
         }
     }

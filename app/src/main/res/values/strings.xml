@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">WeatherApp</string>
     <string name="current_city_hint">Enter city name</string>
+    <string name="city">City</string>
+    <string name="visibility">Visibility</string>
+    <string name="temperature">Temperature</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="network_error">Network is not available</string>
 </resources>
