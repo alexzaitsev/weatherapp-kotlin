@@ -5,6 +5,7 @@ buildscript {
     ext.koin_version = '2.0.1'
     ext.retrofit_version = '2.6.2'
     ext.room_version = '2.2.1'
+    ext.lifecycle_version = "2.1.0"
 
     repositories {
         google()
