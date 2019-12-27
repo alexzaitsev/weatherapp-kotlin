@@ -1,7 +1,5 @@
-package com.alex_zaitsev.weatherapp.data
+package com.alex_zaitsev.weatherapp.data.api
 
-import com.alex_zaitsev.weatherapp.data.api.ApiConst
-import com.alex_zaitsev.weatherapp.data.api.WeatherApiManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -11,6 +9,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 val apiModule = module {
 
@@ -22,30 +21,29 @@ val apiModule = module {
 
     single<OkHttpClient> {
         val builder = OkHttpClient.Builder()
+
+        // setting log interceptor
         if (BuildConfig.DEBUG) {
-            val logInterceptor: HttpLoggingInterceptor by inject(named("logInterceptor"))
+            val logInterceptor by inject<HttpLoggingInterceptor>(named("logInterceptor"))
             builder.addNetworkInterceptor(logInterceptor)
         }
+
+        // build OkHttpClient
+        builder.readTimeout(READ_TIMEOUT_SEC, TimeUnit.SECONDS)
+        builder.connectTimeout(CONNECT_TIMEOUT_SEC, TimeUnit.SECONDS)
         builder.build()
     }
 
     single<Gson> {
-        GsonBuilder()
-            //.registerTypeAdapter(ApiDeviceState::class.java, DeviceStateDeserializer())
-            .create()
+        GsonBuilder().create()
     }
 
-    single<WeatherApiManager> {
+    single<ApiManager> {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(get()))
             .client(get())
-            .baseUrl(ApiConst.WEATHER_BASE_URL)
+            .baseUrl(BASE_URL)
             .build()
-            .create(WeatherApiManager::class.java)
+            .create(ApiManager::class.java)
     }
-}
-
-val repositoryModule = module {
-
-    single { WeatherRepository(get()) }
 }

@@ -2,18 +2,14 @@ package com.alex_zaitsev.weatherapp.domain
 
 import com.alex_zaitsev.weatherapp.data.apiModule
 import com.alex_zaitsev.weatherapp.data.repositoryModule
-import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.GetCurrentWeatherUseCase
-import com.alex_zaitsev.weatherapp.domain.usecases.useCasesModule
+import com.alex_zaitsev.weatherapp.domain.usecases.GetCurrentWeatherUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.hamcrest.CoreMatchers.`is` as Is
 
 @ExperimentalCoroutinesApi
 class GetCurrentWeatherUseCaseTest : KoinTest {

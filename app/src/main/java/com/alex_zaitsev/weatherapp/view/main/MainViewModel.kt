@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alex_zaitsev.weatherapp.R
 import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.CurrentWeatherResult
-import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.GetCurrentWeatherUseCase
+import com.alex_zaitsev.weatherapp.domain.usecases.GetCurrentWeatherUseCase
 import kotlinx.coroutines.launch
 
 

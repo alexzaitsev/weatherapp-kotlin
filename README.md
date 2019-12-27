@@ -8,7 +8,7 @@ Kotlin
 
 #### Architecture
 Clean Architecture.  
-The app is divided into the next modules: app (view layer), domain (business logic layer), data (data layer).  
+The app is divided into the next modules: app (view layer), domain (business logic layer), data, data-api (data layer), entity (shared business logic, in the scope of this app some models only).
 
 #### Dependency Injection tool
 Koin
