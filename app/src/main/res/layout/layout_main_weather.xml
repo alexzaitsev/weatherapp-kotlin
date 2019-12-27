@@ -6,7 +6,7 @@
 
         <variable
             name="currentWeather"
-            type="com.alex_zaitsev.weatherapp.domain.usecases.current_weather.CurrentWeatherResult.Data" />
+            type="com.alex_zaitsev.weatherapp.entity.models.CurrentWeather" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@{Integer.toString(currentWeather.main.visibility)}"
+            android:text="@{Integer.toString(currentWeather.visibility)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtVisibilityLabel"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@{Double.toString(currentWeather.main.temperature)}"
+            android:text="@{Double.toString(currentWeather.temperature)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtTemperatureLabel"
             app:layout_constraintTop_toBottomOf="@+id/txtVisibilityLabel" />
@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@{Integer.toString(currentWeather.main.pressure)}"
+            android:text="@{Integer.toString(currentWeather.pressure)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtPressureLabel"
             app:layout_constraintTop_toBottomOf="@+id/txtTemperatureLabel" />
@@ -80,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:text="@{Integer.toString(currentWeather.main.humidity)}"
+            android:text="@{Integer.toString(currentWeather.humidity)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/txtHumidityLabel"
             app:layout_constraintTop_toBottomOf="@+id/txtPressureLabel" />

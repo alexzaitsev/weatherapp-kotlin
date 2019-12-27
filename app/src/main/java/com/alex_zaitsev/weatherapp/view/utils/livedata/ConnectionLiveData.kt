@@ -1,4 +1,4 @@
-package com.alex_zaitsev.weatherapp.view.utils
+package com.alex_zaitsev.weatherapp.view.utils.livedata
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.lifecycle.LiveData
+import com.alex_zaitsev.weatherapp.view.utils.isConnected
 
 class ConnectionLiveData(private val context: Context) : LiveData<Boolean>() {
 

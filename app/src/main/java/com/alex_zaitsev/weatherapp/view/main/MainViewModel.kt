@@ -2,16 +2,17 @@ package com.alex_zaitsev.weatherapp.view.main
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.alex_zaitsev.weatherapp.R
-import com.alex_zaitsev.weatherapp.domain.usecases.current_weather.CurrentWeatherResult
+import com.alex_zaitsev.weatherapp.domain.DomainError
+import com.alex_zaitsev.weatherapp.domain.DomainResult
 import com.alex_zaitsev.weatherapp.domain.usecases.GetCurrentWeatherUseCase
-import kotlinx.coroutines.launch
+import com.alex_zaitsev.weatherapp.entity.models.CurrentWeather
+import com.alex_zaitsev.weatherapp.view.BaseViewModel
 
 
-class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWeatherUseCase) :
-    ViewModel() {
+class MainViewModel(
+    private val currentWeatherUseCase: GetCurrentWeatherUseCase
+) : BaseViewModel() {
 
     // ============================= INPUT ==============================
     /**
@@ -35,33 +36,26 @@ class MainViewModel constructor(private val currentWeatherUseCase: GetCurrentWea
     /**
      * Data that should be shown to the user if API request was successful
      */
-    val currentWeather = MediatorLiveData<CurrentWeatherResult.Data>()
-
-    val errorResId = MutableLiveData<Int>()
-    val isProgressVisible = MutableLiveData<Boolean>()
-    val isNetworkAvailable = MutableLiveData<Boolean>()
+    val currentWeather = MediatorLiveData<CurrentWeather>()
 
     init {
         currentWeather.addSource(inputCity) { city: String ->
-            if (isNetworkAvailable.value == true) {
-                isProgressVisible.value = true
-                viewModelScope.launch {
-                    when (val result = currentWeatherUseCase.get(city)) {
-                        is CurrentWeatherResult.Data -> {
-                            isDataVisible.value = true
-                            isErrorVisible.value = false
-                            currentWeather.value = result
-                        }
-                        is CurrentWeatherResult.Error -> {
-                            isDataVisible.value = false
-                            isErrorVisible.value = true
-                            errorMessage.value = result.message
+            asyncRunIfConnected {
+                when (val result = currentWeatherUseCase.get(city)) {
+                    is DomainResult.Success -> {
+                        isDataVisible.value = true
+                        isErrorVisible.value = false
+                        currentWeather.value = result.value
+                    }
+                    is DomainResult.Error -> {
+                        isDataVisible.value = false
+                        isErrorVisible.value = true
+                        when (val error = result.error) {
+                            is DomainError.NotFound -> _error.value = R.string.city_not_found
+                            is DomainError.General -> errorMessage.value = error.message
                         }
                     }
-                    isProgressVisible.value = false
                 }
-            } else {
-                errorResId.value = R.string.network_error
             }
         }
     }
