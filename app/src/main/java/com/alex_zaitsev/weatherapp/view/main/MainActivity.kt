@@ -25,15 +25,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun observe() {
-        connectionLiveData.observe(this) {
-            viewModel.isNetworkAvailable.value = it
-        }
+        connectionLiveData.observe(this) { viewModel.isNetworkAvailable.value = it }
         viewModel.isNetworkAvailable.value = isConnected
-        viewModel.error.observe(this) {
-            showSnackbar(binding.root, it)
-        }
-        viewModel.currentWeather.observe(this) {
-            binding.mainWeather.currentWeather = it
-        }
+        viewModel.error.observe(this) { processUiError(binding.root, it) }
+        viewModel.data.observe(this) { binding.mainWeather.currentWeather = it }
     }
 }

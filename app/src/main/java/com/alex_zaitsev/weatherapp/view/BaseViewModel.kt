@@ -12,27 +12,19 @@ abstract class BaseViewModel: ViewModel() {
 
     var isNetworkAvailable = MutableLiveData<Boolean>()
 
-    protected val _isLoading = MutableLiveData<Boolean>()
+    protected val _isLoading = SingleLiveEvent<Boolean>()
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    protected val _error = MutableLiveData<Int>()
-    val error: LiveData<Int>
+    protected val _error = SingleLiveEvent<UiError>()
+    val error: LiveData<UiError>
         get() = _error
-
-    protected val _errorTemplate = MutableLiveData<Pair<Int, String?>>()
-    val errorTemplate: LiveData<Pair<Int, String?>>
-        get() = _errorTemplate
-
-    protected val _openLogin = SingleLiveEvent<Void>()
-    val openLogin: LiveData<Void>
-        get() = _openLogin
 
     fun asyncRunIfConnected(callback: suspend () -> Unit) {
         if (isNetworkAvailable.value == true) {
             asyncRunWithProgress(callback)
         } else {
-            _error.value = R.string.error_network
+            _error.value = UiError.Resource(R.string.error_network)
         }
     }
 
