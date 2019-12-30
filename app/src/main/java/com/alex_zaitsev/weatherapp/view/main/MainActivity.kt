@@ -7,6 +7,7 @@ import com.alex_zaitsev.weatherapp.R
 import com.alex_zaitsev.weatherapp.databinding.ActivityMainBinding
 import com.alex_zaitsev.weatherapp.view.BaseActivity
 import com.alex_zaitsev.weatherapp.view.utils.isConnected
+import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : BaseActivity() {
@@ -21,13 +22,24 @@ class MainActivity : BaseActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        initToolbar()
         observe()
+        loadData()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(binding.toolbarLayout.toolbar)
+        binding.toolbarLayout.toolbar.txtTitle.text = getString(R.string.app_name)
     }
 
     private fun observe() {
         connectionLiveData.observe(this) { viewModel.isNetworkAvailable.value = it }
         viewModel.isNetworkAvailable.value = isConnected
         viewModel.error.observe(this) { processUiError(binding.root, it) }
-        viewModel.data.observe(this) { binding.mainWeather.currentWeather = it }
+        viewModel.data.observe(this) { binding.content.currentWeather = it }
+    }
+
+    private fun loadData() {
+        viewModel.loadData()
     }
 }

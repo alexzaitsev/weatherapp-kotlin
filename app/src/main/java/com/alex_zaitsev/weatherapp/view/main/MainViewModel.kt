@@ -2,14 +2,9 @@ package com.alex_zaitsev.weatherapp.view.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import com.alex_zaitsev.weatherapp.R
-import com.alex_zaitsev.weatherapp.domain.DomainError
-import com.alex_zaitsev.weatherapp.domain.DomainResult
 import com.alex_zaitsev.weatherapp.domain.usecases.GetCurrentWeatherUseCase
 import com.alex_zaitsev.weatherapp.entity.models.CurrentWeather
 import com.alex_zaitsev.weatherapp.view.BaseViewModel
-import com.alex_zaitsev.weatherapp.view.UiError
 import com.alex_zaitsev.weatherapp.view.utils.livedata.SingleLiveEvent
 
 
@@ -37,17 +32,17 @@ class MainViewModel(
 
     fun loadData() {
         asyncRunIfConnected {
-            _isStubVisible.value = false
-            when (val result = currentWeatherUseCase.get(city)) {
-                is DomainResult.Success -> _data.value = result.value
-                is DomainResult.Error -> {
-                    _isStubVisible.value = true
-                    _error.value = when (val error = result.error) {
-                        is DomainError.NotFound -> UiError.Resource(R.string.city_not_found)
-                        is DomainError.General -> UiError.Message(error.message)
-                    }
-                }
-            }
+            _isStubVisible.value = true
+//            when (val result = currentWeatherUseCase.get(city)) {
+//                is DomainResult.Success -> _data.value = result.value
+//                is DomainResult.Error -> {
+//                    _isStubVisible.value = true
+//                    _error.value = when (val error = result.error) {
+//                        is DomainError.NotFound -> UiError.Resource(R.string.city_not_found)
+//                        is DomainError.General -> UiError.Message(error.message)
+//                    }
+//                }
+//            }
         }
     }
 }
