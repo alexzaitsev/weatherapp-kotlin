@@ -2,7 +2,7 @@ package com.alex_zaitsev.weatherapp.domain
 
 import com.alex_zaitsev.weatherapp.data.apiModule
 import com.alex_zaitsev.weatherapp.data.repositoryModule
-import com.alex_zaitsev.weatherapp.domain.usecases.GetCurrentWeatherUseCase
+import com.alex_zaitsev.weatherapp.domain.operations.WeatherOperations
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -17,7 +17,7 @@ class GetCurrentWeatherUseCaseTest : KoinTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    val sut by inject<GetCurrentWeatherUseCase>()
+    val sut by inject<WeatherOperations>()
 
     @Before
     fun before() {

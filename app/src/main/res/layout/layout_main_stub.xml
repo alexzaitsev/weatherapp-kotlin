@@ -12,7 +12,7 @@
         android:paddingEnd="40dp"
         android:stateListAnimator="@null"
         android:text="@string/select_city"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorAccent"
         android:textSize="20sp" />
 
 </FrameLayout>

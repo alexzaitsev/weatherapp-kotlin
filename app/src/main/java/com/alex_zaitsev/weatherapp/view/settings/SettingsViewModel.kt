@@ -1,12 +1,31 @@
 package com.alex_zaitsev.weatherapp.view.settings
 
 import androidx.lifecycle.MutableLiveData
+import com.alex_zaitsev.weatherapp.domain.operations.CityOperations
 import com.alex_zaitsev.weatherapp.view.BaseViewModel
 
-class SettingsViewModel : BaseViewModel() {
+class SettingsViewModel(
+    private val cityOperations: CityOperations
+) : BaseViewModel() {
 
-    /**
-     * City name entered by user
-     */
     val inputCity = MutableLiveData<String>()
+
+    fun loadData() {
+
+    }
+
+    fun loadWeather(city: String) {
+//        asyncRunIfConnected {
+//            when (val result = currentWeatherUseCase.get(city)) {
+//                is DomainResult.Success -> _data.value = result.value
+//                is DomainResult.Error -> {
+//                    _isStubVisible.value = true
+//                    _error.value = when (val error = result.error) {
+//                        is DomainError.NotFound -> UiError.Resource(R.string.city_not_found)
+//                        is DomainError.General -> UiError.Message(error.message)
+//                    }
+//                }
+//            }
+//        }
+    }
 }

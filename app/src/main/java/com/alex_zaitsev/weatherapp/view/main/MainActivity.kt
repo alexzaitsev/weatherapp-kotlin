@@ -29,7 +29,6 @@ class MainActivity : BaseActivity() {
 
     private fun initToolbar() {
         setSupportActionBar(binding.toolbarLayout.toolbar)
-        binding.toolbarLayout.toolbar.txtTitle.text = getString(R.string.app_name)
     }
 
     private fun observe() {

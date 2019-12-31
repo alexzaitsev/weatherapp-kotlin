@@ -3,6 +3,7 @@ package com.alex_zaitsev.weatherapp.view
 import android.app.Application
 import com.alex_zaitsev.weatherapp.data.api.apiModule
 import com.alex_zaitsev.weatherapp.data.dataModule
+import com.alex_zaitsev.weatherapp.data.prefs.prefsModule
 import com.alex_zaitsev.weatherapp.domain.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -21,7 +22,8 @@ class App : Application() {
                     appModule,
                     domainModule,
                     dataModule,
-                    apiModule
+                    apiModule,
+                    prefsModule
                 )
             )
         }

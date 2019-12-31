@@ -5,4 +5,5 @@
     <color name="colorAccent">#ffffff</color>
     <color name="buttonDefault">#1AFFFFFF</color>
     <color name="buttonPressed">#66FFFFFF</color>
+    <color name="backgroundFg">#0F000000</color>
 </resources>
