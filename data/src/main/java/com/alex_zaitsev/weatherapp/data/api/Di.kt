@@ -1,5 +1,6 @@
 package com.alex_zaitsev.weatherapp.data.api
 
+import com.alex_zaitsev.weatherapp.data.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -19,7 +20,7 @@ val apiModule = module {
         interceptor
     }
 
-    single<OkHttpClient> {
+    single {
         val builder = OkHttpClient.Builder()
 
         // setting log interceptor

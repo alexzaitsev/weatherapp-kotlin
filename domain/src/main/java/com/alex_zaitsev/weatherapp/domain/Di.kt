@@ -5,6 +5,6 @@ import com.alex_zaitsev.weatherapp.domain.operations.WeatherOperations
 import org.koin.dsl.module
 
 val domainModule = module {
-    single { CityOperations(get()) }
+    single { CityOperations(get(), get()) }
     single { WeatherOperations(get()) }
 }

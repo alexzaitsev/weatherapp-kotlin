@@ -5,8 +5,6 @@ import com.alex_zaitsev.weatherapp.entity.models.CurrentWeather
 import java.util.*
 
 internal fun CurrentWeatherResponse.map() = CurrentWeather(
-    id = id,
-    name = name,
     visibility = visibility,
     temperature = main.temperature,
     feelsLike = main.feelsLike,

@@ -28,8 +28,6 @@ android {
 dependencies {
     implementation project(':entity')
     implementation project(':data') // for DI only
-    implementation project(':data-api') // for DI only
-    implementation project(':data-prefs') // for DI only
     implementation project(':domain')
 
     // General
