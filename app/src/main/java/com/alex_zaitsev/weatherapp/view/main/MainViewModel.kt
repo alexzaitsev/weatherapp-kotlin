@@ -2,12 +2,15 @@ package com.alex_zaitsev.weatherapp.view.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.alex_zaitsev.weatherapp.domain.operations.WeatherOperations
 import com.alex_zaitsev.weatherapp.entity.models.CurrentWeather
 import com.alex_zaitsev.weatherapp.view.BaseViewModel
 import com.alex_zaitsev.weatherapp.view.utils.livedata.SingleLiveEvent
 
 
-class MainViewModel() : BaseViewModel() {
+class MainViewModel(
+    private val weatherOperations: WeatherOperations
+) : BaseViewModel() {
 
     private val _isStubVisible = SingleLiveEvent<Boolean>()
     val isStubVisible: LiveData<Boolean>

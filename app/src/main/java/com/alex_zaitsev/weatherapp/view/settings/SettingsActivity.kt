@@ -6,22 +6,23 @@ import androidx.lifecycle.observe
 import com.alex_zaitsev.weatherapp.R
 import com.alex_zaitsev.weatherapp.databinding.ActivitySettingsBinding
 import com.alex_zaitsev.weatherapp.view.BaseActivity
-import com.alex_zaitsev.weatherapp.view.utils.isConnected
 import kotlinx.android.synthetic.main.toolbar.view.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.get
 
-class SettingsActivity : BaseActivity() {
+class SettingsActivity : BaseActivity<ActivitySettingsBinding, SettingsViewModel>() {
 
-    private val viewModel by viewModel<SettingsViewModel>()
-    private lateinit var binding: ActivitySettingsBinding
+    override fun setViewModel() {
+        viewModel = get()
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun setBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         initToolbar()
         observe()
     }
@@ -30,10 +31,8 @@ class SettingsActivity : BaseActivity() {
         setSupportActionBar(binding.toolbarLayout.toolbar)
     }
 
-    private fun observe() {
-        connectionLiveData.observe(this) { viewModel.isNetworkAvailable.value = it }
-        viewModel.isNetworkAvailable.value = isConnected
-        viewModel.error.observe(this) { processUiError(binding.root, it) }
+    override fun observe() {
+        super.observe()
         viewModel.inputCity.observe(this) { viewModel.loadWeather(it) }
     }
 }
