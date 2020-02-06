@@ -4,7 +4,7 @@ import com.alex_zaitsev.weatherapp.data.DataError
 import com.alex_zaitsev.weatherapp.data.DataResult
 
 sealed class DomainResult<T> {
-    data class Success<T>(val value: T) : DomainResult<T>()
+    data class Success<T>(val value: T): DomainResult<T>()
     data class Error<T>(val error: DomainError) : DomainResult<T>()
 }
 
@@ -14,7 +14,7 @@ sealed class DomainError {
 }
 
 internal fun DataError.mapToDomain(): DomainError = when (code) {
-    404 -> DomainError.NotFound
+    HTTP_CODE_ERROR_NOT_FOUND -> DomainError.NotFound
     else -> DomainError.General(code, message)
 }
 

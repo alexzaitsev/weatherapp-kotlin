@@ -5,6 +5,6 @@ import com.alex_zaitsev.weatherapp.data.repositories.WeatherRepository
 import org.koin.dsl.module
 
 val dataModule = module {
-    single { WeatherRepository(get()) }
+    single { WeatherRepository(get(), get()) }
     single { CityRepository(get()) }
 }

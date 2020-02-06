@@ -8,17 +8,14 @@ class PrefsManager(
 ) {
 
     fun getCity(): City? {
-        val id = prefs.getInt(PREF_CITY_ID, 0)
+        val id = prefs.getString(PREF_CITY_ID, null)
         val name = prefs.getString(PREF_CITY_NAME, null)
-        if (id != 0 && name != null) {
-            return City(id, name)
-        }
-        return null
+        return if (id.isNullOrEmpty() || name.isNullOrEmpty()) null else City(id, name)
     }
 
     fun saveCity(city: City) {
         prefs.edit()
-            .putInt(PREF_CITY_ID, city.id)
+            .putString(PREF_CITY_ID, city.id)
             .putString(PREF_CITY_NAME, city.name)
             .apply()
     }

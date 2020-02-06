@@ -1,11 +1,11 @@
 package com.alex_zaitsev.weatherapp.view.settings
 
 import androidx.lifecycle.MutableLiveData
-import com.alex_zaitsev.weatherapp.domain.operations.CityOperations
+import com.alex_zaitsev.weatherapp.domain.operations.WeatherOperations
 import com.alex_zaitsev.weatherapp.view.BaseViewModel
 
 class SettingsViewModel(
-    private val cityOperations: CityOperations
+    private val weatherOperations: WeatherOperations
 ) : BaseViewModel() {
 
     val inputCity = MutableLiveData<String>()

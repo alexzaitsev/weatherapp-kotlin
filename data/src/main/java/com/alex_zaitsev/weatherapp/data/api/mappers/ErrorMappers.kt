@@ -1,7 +1,6 @@
-package com.alex_zaitsev.weatherapp.data.mappers
+package com.alex_zaitsev.weatherapp.data.api.mappers
 
 import com.alex_zaitsev.weatherapp.data.DataError
-import com.alex_zaitsev.weatherapp.data.DataResult
 import com.alex_zaitsev.weatherapp.data.api.models.ErrorResponse
 
 internal fun ErrorResponse.map() = DataError(
